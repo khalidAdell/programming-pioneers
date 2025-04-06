@@ -1,4 +1,4 @@
-import Courses from "@/app/components/courses/Courses";
+import Courses from "../components/courses/Courses";
 
 const CoursesPage = async () => {
   const res = await fetch("http://localhost:3000/api/courses", {
@@ -6,7 +6,6 @@ const CoursesPage = async () => {
   });
 
   if (!res.ok) {
-    // هنا ممكن تحط handling بسيط للأخطاء
     throw new Error("Failed to fetch courses");
   }
 

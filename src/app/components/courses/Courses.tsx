@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 interface CoursesProps {
   courses: Course[];
-  filterParam: string | null;
+  filterParam?: string | null;
 }
 
 const Courses = ({ courses, filterParam = null }: CoursesProps) => {

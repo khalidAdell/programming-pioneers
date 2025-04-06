@@ -1,12 +1,12 @@
 import Courses from "@/app/components/courses/Courses";
 
-const CoursesPage = async ({
-  params,
-}: {
-  params: {
-    filter: string;
-  };
-}) => {
+type Props = {
+  params: Promise<{ filter: string }>;
+};
+
+const CoursesPage = async ({ params }: Props) => {
+  const { filter } = await params;
+
   const res = await fetch("http://localhost:3000/api/courses", {
     cache: "no-store",
   });
@@ -19,10 +19,7 @@ const CoursesPage = async ({
 
   return (
     <div>
-      <Courses
-        courses={courses}
-        filterParam={decodeURIComponent(params.filter)}
-      />
+      <Courses courses={courses} filterParam={decodeURIComponent(filter)} />
     </div>
   );
 };
