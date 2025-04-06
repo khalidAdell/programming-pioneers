@@ -1,9 +1,12 @@
 import Courses from "../components/courses/Courses";
 
 const CoursesPage = async () => {
-  const res = await fetch("http://localhost:3000/api/courses", {
-    cache: "no-store",
-  });
+  const res = await fetch(
+    "https://programming-pioneers-p394.vercel.app/api/courses",
+    {
+      cache: "no-store",
+    }
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch courses");
