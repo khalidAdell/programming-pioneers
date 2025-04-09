@@ -1,6 +1,5 @@
 import {
   Facebook,
-  Twitter,
   Instagram,
   Youtube,
   Mail,
@@ -26,9 +25,7 @@ const Footer = () => {
               <Link href="#" className="text-slate-300 hover:text-white">
                 <Facebook size={20} />
               </Link>
-              <Link href="#" className="text-slate-300 hover:text-white">
-                <Twitter size={20} />
-              </Link>
+
               <Link href="#" className="text-slate-300 hover:text-white">
                 <Instagram size={20} />
               </Link>
