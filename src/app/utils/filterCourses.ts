@@ -13,6 +13,7 @@ export const filterCourses = (
     const lowerSearchTerm = searchTerm.toLowerCase();
     filtered = filtered.filter(
       (course) =>
+        course.category.toLowerCase().includes(lowerSearchTerm) ||
         course.title.toLowerCase().includes(lowerSearchTerm) ||
         course.description.toLowerCase().includes(lowerSearchTerm) ||
         course.instructor.toLowerCase().includes(lowerSearchTerm) ||
@@ -22,9 +23,13 @@ export const filterCourses = (
 
   // Apply category filter
   if (activeFilters.category) {
-    filtered = filtered.filter(
-      (course) => course.category === activeFilters.category
-    );
+    if (activeFilters.category === "الكل") {
+      filtered = filtered;
+    } else {
+      filtered = filtered.filter(
+        (course) => course.category === activeFilters.category
+      );
+    }
   }
 
   // Apply level filter

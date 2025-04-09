@@ -22,19 +22,19 @@ export const metadata: Metadata = {
 
 interface CoursesProps {
   courses: Course[];
-  filterParam?: string | null;
+  filterParam?: string;
 }
 
-const Courses = ({ courses, filterParam = null }: CoursesProps) => {
+const Courses = ({ courses, filterParam = "" }: CoursesProps) => {
   const [pagesNum, setPagesNum] = useState(0);
   const [activePage, setActivePage] = useState(1);
   const [filteredCourses, setFilteredCourses] = useState<Course[]>(courses);
   const [paginationCourses, setPaginationCourses] =
     useState<Course[]>(filteredCourses);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(filterParam);
   const [showFilters, setShowFilters] = useState(false);
   const [activeFilters, setActiveFilters] = useState<ActiveFiltersType>({
-    category: filterParam,
+    category: null,
     level: null,
     priceRange: null,
     rating: null,
@@ -45,6 +45,7 @@ const Courses = ({ courses, filterParam = null }: CoursesProps) => {
   // Available filter options
   const filterOptions: CourseFilterOptions = {
     categories: [
+      "الكل",
       "تطوير الويب",
       "الذكاء الاصطناعي",
       "تطبيقات الجوال",

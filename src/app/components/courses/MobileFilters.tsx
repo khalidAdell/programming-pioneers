@@ -111,12 +111,12 @@ interface AccordionProps {
   onToggle: (item: string) => void;
 }
 
-export const Accordion: React.FC<AccordionProps> = ({
+export const Accordion = ({
   title,
   items,
   activeItem,
   onToggle,
-}) => {
+}: AccordionProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -142,7 +142,7 @@ export const Accordion: React.FC<AccordionProps> = ({
             <div key={item} className="flex items-center gap-2 ">
               <label className="flex items-center cursor-pointer w-full">
                 <input
-                  type="checkbox"
+                  type="radio"
                   checked={activeItem === item}
                   onChange={() => onToggle(item)}
                   className="form-checkbox h-4 w-4 text-yellow-500 rounded"

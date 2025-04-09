@@ -14,7 +14,7 @@ interface Category {
 
 async function getRecentCourses() {
   const res = await fetch(
-    `https://programming-pioneers-p394.vercel.app/api/courses?featured=${true}`,
+    `http://localhost:3000/api/courses?featured=${true}`,
     {
       cache: "no-store",
     }
@@ -23,12 +23,9 @@ async function getRecentCourses() {
   return res.json();
 }
 async function getfeaturedCourses() {
-  const res = await fetch(
-    `https://programming-pioneers-p394.vercel.app/api/courses?recent=${true}`,
-    {
-      cache: "no-store",
-    }
-  );
+  const res = await fetch(`http://localhost:3000/api/courses?recent=${true}`, {
+    cache: "no-store",
+  });
 
   return res.json();
 }
@@ -116,7 +113,7 @@ const Home = async () => {
                       "ذكاء اصطناعي",
                     ].map((tag, idx) => (
                       <Link
-                        href={`/${tag}`}
+                        href={`/courses/${tag}`}
                         key={idx}
                         className="bg-white/20 text-white px-3 py-1 rounded-lg text-sm"
                       >
@@ -251,19 +248,19 @@ const Home = async () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-slate-50 p-6 rounded-lg border border-slate-100 text-right">
-              <div className="flex mb-4">
+              <div className="flex mb-4 gap-2">
+                <div className="relative w-12 h-12 rounded-full overflow-hidden">
+                  <Image
+                    src="https://randomuser.me/api/portraits/men/1.jpg"
+                    alt="صورة المستخدم"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
                 <div className="flex items-center">
                   <div className="mr-4">
-                    <p className="font-bold">خالد العبدالله</p>
+                    <p className="font-bold text-gray-700">خالد العبدالله</p>
                     <p className="text-gray-500 text-sm">مهندس برمجيات</p>
-                  </div>
-                  <div className="relative w-12 h-12 rounded-full overflow-hidden">
-                    <Image
-                      src="/api/placeholder/48/48"
-                      alt="صورة المستخدم"
-                      fill
-                      className="object-cover"
-                    />
                   </div>
                 </div>
               </div>
@@ -283,19 +280,19 @@ const Home = async () => {
             </div>
 
             <div className="bg-slate-50 p-6 rounded-lg border border-slate-100 text-right">
-              <div className="flex mb-4">
+              <div className="flex mb-4 gap-2">
+                <div className="relative w-12 h-12 rounded-full overflow-hidden">
+                  <Image
+                    src="https://randomuser.me/api/portraits/men/1.jpg"
+                    alt="صورة المستخدم"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
                 <div className="flex items-center">
                   <div className="mr-4">
-                    <p className="font-bold">نورة السعيد</p>
+                    <p className="font-bold text-gray-700">نورة السعيد</p>
                     <p className="text-gray-500 text-sm">مطورة ويب</p>
-                  </div>
-                  <div className="relative w-12 h-12 rounded-full overflow-hidden">
-                    <Image
-                      src="/api/placeholder/48/48"
-                      alt="صورة المستخدم"
-                      fill
-                      className="object-cover"
-                    />
                   </div>
                 </div>
               </div>

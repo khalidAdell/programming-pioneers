@@ -33,7 +33,7 @@ export const DesktopFilters = ({
             <div key={category} className="flex items-center gap-2 ">
               <label className="flex items-center cursor-pointer w-full">
                 <input
-                  type="checkbox"
+                  type="radio"
                   checked={activeFilters.category === category}
                   onChange={() => toggleFilter("category", category)}
                   className="form-checkbox h-4 w-4 text-yellow-500 rounded"
@@ -53,7 +53,7 @@ export const DesktopFilters = ({
             <div key={level} className="flex items-center gap-2 ">
               <label className="flex items-center cursor-pointer w-full">
                 <input
-                  type="checkbox"
+                  type="radio"
                   checked={activeFilters.level === level}
                   onChange={() => toggleFilter("level", level)}
                   className="form-checkbox h-4 w-4 text-yellow-500 rounded"
@@ -73,7 +73,7 @@ export const DesktopFilters = ({
             <div key={range} className="flex items-center gap-2 ">
               <label className="flex items-center cursor-pointer w-full">
                 <input
-                  type="checkbox"
+                  type="radio"
                   checked={activeFilters.priceRange === range}
                   onChange={() => toggleFilter("priceRange", range)}
                   className="form-checkbox h-4 w-4 text-yellow-500 rounded"
@@ -94,7 +94,7 @@ export const DesktopFilters = ({
               <label className="flex items-center cursor-pointer w-full">
                 <div className="flex items-center mr-2 gap-2">
                   <input
-                    type="checkbox"
+                    type="radio"
                     checked={activeFilters.rating === rating}
                     onChange={() => toggleFilter("rating", rating)}
                     className="form-checkbox h-4 w-4 text-yellow-500 rounded"

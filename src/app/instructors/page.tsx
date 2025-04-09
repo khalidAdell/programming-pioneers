@@ -1,0 +1,21 @@
+import Instructors from "../components/instructors/Instructors";
+
+const InstructorsPage = async () => {
+  const res = await fetch("http://localhost:3000/api/instructors", {
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch instructors");
+  }
+
+  const instructors = await res.json();
+
+  return (
+    <div>
+      <Instructors instructors={instructors} />
+    </div>
+  );
+};
+
+export default InstructorsPage;
