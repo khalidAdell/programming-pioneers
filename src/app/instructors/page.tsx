@@ -1,9 +1,12 @@
 import Instructors from "../components/instructors/Instructors";
 
 const InstructorsPage = async () => {
-  const res = await fetch("http://localhost:3000/api/instructors", {
-    cache: "no-store",
-  });
+  const res = await fetch(
+    "https://programming-pioneers-p394.vercel.app/api/instructors",
+    {
+      cache: "no-store",
+    }
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch instructors");

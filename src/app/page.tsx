@@ -14,7 +14,7 @@ interface Category {
 
 async function getRecentCourses() {
   const res = await fetch(
-    `http://localhost:3000/api/courses?featured=${true}`,
+    `https://programming-pioneers-p394.vercel.app/api/courses?featured=${true}`,
     {
       cache: "no-store",
     }
@@ -23,9 +23,12 @@ async function getRecentCourses() {
   return res.json();
 }
 async function getfeaturedCourses() {
-  const res = await fetch(`http://localhost:3000/api/courses?recent=${true}`, {
-    cache: "no-store",
-  });
+  const res = await fetch(
+    `https://programming-pioneers-p394.vercel.app/api/courses?recent=${true}`,
+    {
+      cache: "no-store",
+    }
+  );
 
   return res.json();
 }
