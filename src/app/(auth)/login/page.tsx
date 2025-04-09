@@ -24,7 +24,7 @@ const schema = yup.object().shape({
     .string()
     .required("كلمة المرور مطلوبة")
     .min(8, "كلمة المرور قصيرة جداً"),
-  rememberMe: yup.boolean(),
+  rememberMe: yup.boolean().default(false).required(),
 });
 
 const Login = () => {
@@ -178,10 +178,14 @@ const Login = () => {
                     control={control}
                     render={({ field }) => (
                       <input
-                        {...field}
                         id="rememberMe"
                         type="checkbox"
                         className="h-4 w-4 text-yellow-500 border-gray-300 rounded focus:ring-yellow-500 ml-2"
+                        checked={field.value}
+                        onChange={(e) => field.onChange(e.target.checked)}
+                        onBlur={field.onBlur}
+                        name={field.name}
+                        ref={field.ref}
                       />
                     )}
                   />

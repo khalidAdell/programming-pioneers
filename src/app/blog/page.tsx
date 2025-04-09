@@ -102,7 +102,7 @@ const BLOG_POSTS = [
 
 // The main Blog component
 const Blog = () => {
-  const [posts, setPosts] = useState(BLOG_POSTS);
+  const posts = BLOG_POSTS;
   const [visiblePosts, setVisiblePosts] = useState(3);
 
   // Function to load more posts

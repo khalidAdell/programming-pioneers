@@ -283,10 +283,14 @@ const Register = () => {
                   control={control}
                   render={({ field }) => (
                     <input
-                      {...field}
                       id="agreeTerms"
                       type="checkbox"
                       className="h-4 w-4 text-yellow-500 border-gray-300 rounded focus:ring-yellow-500 ml-2"
+                      checked={field.value}
+                      onChange={(e) => field.onChange(e.target.checked)}
+                      onBlur={field.onBlur}
+                      name={field.name}
+                      ref={field.ref}
                     />
                   )}
                 />

@@ -47,7 +47,7 @@ const ForgotPassword = () => {
       // Simulate successful submission
       console.log("Password reset requested for:", data.email);
       setIsSubmitted(true);
-    } catch (error) {
+    } catch {
       setResetError(
         "حدث خطأ أثناء طلب إعادة تعيين كلمة المرور. يرجى المحاولة مرة أخرى."
       );
