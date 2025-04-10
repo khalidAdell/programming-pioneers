@@ -18,8 +18,7 @@ import {
   Award,
 } from "lucide-react";
 import CourseCard from "../CourseCard";
-import Footer from "@/app/components/Footer";
-import Navbar from "@/app/components/Navbar";
+
 import { Course } from "@/app/types/courses";
 
 interface Instructor {
@@ -76,7 +75,6 @@ const Instructor = ({ instructor, courses }: Props) => {
   if (!instructor || instructor.error) {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col">
-        <Navbar />
         <div className="container mx-auto px-4 py-20 flex-grow">
           <div className="text-center">
             <div className="text-5xl mb-4">😔</div>
@@ -94,15 +92,12 @@ const Instructor = ({ instructor, courses }: Props) => {
             </Link>
           </div>
         </div>
-        <Footer />
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <Navbar />
-
       {/* Cover Image */}
       <div className="relative h-64 w-full">
         <Image
@@ -479,8 +474,6 @@ const Instructor = ({ instructor, courses }: Props) => {
           )}
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };

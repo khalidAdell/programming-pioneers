@@ -4,9 +4,10 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 import { Mail, Lock, EyeOff, Eye, AlertCircle, UserCheck } from "lucide-react";
-import Navbar from "@/app/components/Navbar";
-import Footer from "@/app/components/Footer";
+
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface LoginFormData {
   email: string;
@@ -32,6 +33,10 @@ const Login = () => {
   const [loginError, setLoginError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
+
   const {
     control,
     handleSubmit,
@@ -50,24 +55,43 @@ const Login = () => {
     setLoginError("");
 
     try {
-      await new Promise<void>((resolve) => setTimeout(resolve, 1500));
+      // Sign in with credentials using Next-Auth
+      const result = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: true,
+        callbackUrl: "/",
+      });
 
-      console.log("Login attempt:", data);
+      if (result?.error) {
+        setLoginError(
+          "فشل تسجيل الدخول. يرجى التحقق من بيانات الاعتماد الخاصة بك والمحاولة مرة أخرى."
+        );
+        return;
+      }
 
-      window.location.href = "/dashboard";
+      if (data.rememberMe) {
+        localStorage.setItem("userEmail", data.email);
+      } else {
+        localStorage.removeItem("userEmail");
+      }
+
+      // Redirect after successful login
+      router.push(callbackUrl);
     } catch {
-      setLoginError(
-        "فشل تسجيل الدخول. يرجى التحقق من بيانات الاعتماد الخاصة بك والمحاولة مرة أخرى."
-      );
+      setLoginError("حدث خطأ أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  // GitHub sign in handler
+  const handleGitHubSignIn = async () => {
+    await signIn("github", { callbackUrl });
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <Navbar />
-
       <main className="container mx-auto px-4 py-12 flex-grow flex items-center justify-center">
         <div className="w-full max-w-md">
           <div className="bg-white rounded-lg shadow-sm p-8">
@@ -105,7 +129,7 @@ const Login = () => {
                         id="email"
                         type="email"
                         placeholder="أدخل بريدك الإلكتروني"
-                        className={`w-full px-4 py-3 rounded-lg border ${
+                        className={`w-full px-4 text-gray-600 py-3 rounded-lg border ${
                           errors.email ? "border-red-500" : "border-gray-300"
                         } focus:ring-2 focus:ring-yellow-500 focus:border-transparent pr-10 text-right`}
                       />
@@ -140,7 +164,7 @@ const Login = () => {
                         id="password"
                         type={showPassword ? "text" : "password"}
                         placeholder="أدخل كلمة المرور"
-                        className={`w-full px-4 py-3 rounded-lg border ${
+                        className={`w-full px-4 text-gray-600 py-3 rounded-lg border ${
                           errors.password ? "border-red-500" : "border-gray-300"
                         } focus:ring-2 focus:ring-yellow-500 focus:border-transparent pr-10 text-right`}
                       />
@@ -209,6 +233,35 @@ const Login = () => {
               </div>
             </form>
 
+            <div className="mt-6 relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-500">
+                  أو تسجيل الدخول باستخدام
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <button
+                onClick={handleGitHubSignIn}
+                className="w-full bg-gray-800 hover:bg-gray-700 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                </svg>
+                تسجيل الدخول باستخدام GitHub
+              </button>
+            </div>
+
             <div className="mt-8 pt-6 border-t border-gray-200 text-center">
               <p className="text-gray-600">
                 ليس لديك حساب؟{" "}
@@ -223,8 +276,6 @@ const Login = () => {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 };

@@ -108,8 +108,6 @@ const Courses = ({ courses, filterParam = "" }: CoursesProps) => {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <Navbar />
-
       <HeroBanner searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
       <main className="container mx-auto px-4 py-8 flex-grow">
@@ -184,8 +182,6 @@ const Courses = ({ courses, filterParam = "" }: CoursesProps) => {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 };

@@ -11,8 +11,6 @@ import {
   Lightbulb,
   Briefcase,
 } from "lucide-react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 const AboutPage = () => {
   const [activeTab, setActiveTab] = useState<string>("mission");
@@ -85,8 +83,6 @@ const AboutPage = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <Navbar />
-
       {/* Hero Banner */}
       <div className="relative bg-linear-to-r from-indigo-900 to-purple-800 py-16">
         {/* Abstract shapes */}
@@ -445,8 +441,6 @@ const AboutPage = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

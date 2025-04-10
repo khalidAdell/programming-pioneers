@@ -8,8 +8,6 @@ import {
   Bookmark,
   ChevronDown,
 } from "lucide-react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 // Mock data for blog posts
 const BLOG_POSTS = [
@@ -112,8 +110,6 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <Navbar />
-
       {/* Hero Banner */}
       <div className="relative bg-linear-to-r from-indigo-900 to-purple-800">
         {/* Abstract shapes */}
@@ -301,8 +297,6 @@ const Blog = () => {
           )}
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 };

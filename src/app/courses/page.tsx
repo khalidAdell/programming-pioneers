@@ -2,7 +2,7 @@ import Courses from "../components/courses/Courses";
 
 const CoursesPage = async () => {
   const res = await fetch(
-    "https://programming-pioneers-p394.vercel.app/api/courses",
+    "https://programming-pioneers-p394.vercel.app//api/courses",
     {
       cache: "no-store",
     }

@@ -18,8 +18,7 @@ import {
   Award,
   Bookmark,
 } from "lucide-react";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+
 import SliderCards from "../../components/SliderCards";
 import { SingleCourse } from "@/app/types/courses";
 
@@ -67,7 +66,6 @@ const Course = ({
   if (course.error) {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col">
-        <Navbar />
         <div className="container mx-auto px-4 py-20 flex-grow">
           <div className="text-center">
             <div className="text-5xl mb-4">😔</div>
@@ -85,15 +83,12 @@ const Course = ({
             </Link>
           </div>
         </div>
-        <Footer />
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <Navbar />
-
       {/* Course Hero Section */}
       <div className="relative bg-linear-to-r from-indigo-900 to-purple-800 py-16">
         {/* Abstract shapes */}
@@ -587,8 +582,6 @@ const Course = ({
           )}
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

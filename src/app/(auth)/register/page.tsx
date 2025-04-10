@@ -13,8 +13,6 @@ import {
   AlertCircle,
   UserPlus,
 } from "lucide-react";
-import Navbar from "@/app/components/Navbar";
-import Footer from "@/app/components/Footer";
 
 interface RegisterFormData {
   fullName: string;
@@ -95,8 +93,6 @@ const Register = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <Navbar />
-
       <main className="container mx-auto px-4 py-12 flex-grow">
         <div className="max-w-md mx-auto">
           <div className="bg-white rounded-lg shadow-sm p-8">
@@ -134,7 +130,7 @@ const Register = () => {
                         id="fullName"
                         type="text"
                         placeholder="أدخل اسمك الكامل"
-                        className={`w-full px-4 py-3 rounded-lg border ${
+                        className={`w-full px-4 py-3 text-gray-600 rounded-lg border ${
                           errors.fullName ? "border-red-500" : "border-gray-300"
                         } focus:ring-2 focus:ring-yellow-500 focus:border-transparent pr-10 text-right`}
                       />
@@ -169,7 +165,7 @@ const Register = () => {
                         id="email"
                         type="email"
                         placeholder="أدخل بريدك الإلكتروني"
-                        className={`w-full px-4 py-3 rounded-lg border ${
+                        className={`w-full px-4 py-3 text-gray-600 rounded-lg border ${
                           errors.email ? "border-red-500" : "border-gray-300"
                         } focus:ring-2 focus:ring-yellow-500 focus:border-transparent pr-10 text-right`}
                       />
@@ -204,7 +200,7 @@ const Register = () => {
                         id="password"
                         type={showPassword ? "text" : "password"}
                         placeholder="أدخل كلمة المرور"
-                        className={`w-full px-4 py-3 rounded-lg border ${
+                        className={`w-full px-4 py-3 text-gray-600 rounded-lg border ${
                           errors.password ? "border-red-500" : "border-gray-300"
                         } focus:ring-2 focus:ring-yellow-500 focus:border-transparent pr-10 text-right`}
                       />
@@ -246,7 +242,7 @@ const Register = () => {
                         id="confirmPassword"
                         type={showConfirmPassword ? "text" : "password"}
                         placeholder="أدخل كلمة المرور مرة أخرى"
-                        className={`w-full px-4 py-3 rounded-lg border ${
+                        className={`w-full px-4 py-3 text-gray-600 rounded-lg border ${
                           errors.confirmPassword
                             ? "border-red-500"
                             : "border-gray-300"
@@ -345,8 +341,6 @@ const Register = () => {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 };

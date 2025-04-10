@@ -2,7 +2,7 @@ import Course from "@/app/components/course/Course";
 
 const fetchCourseData = async ({ id }: { id: string }) => {
   const courseRes = await fetch(
-    `https://programming-pioneers-p394.vercel.app/api/course/${id}`,
+    `https://programming-pioneers-p394.vercel.app//api/course/${id}`,
     {
       cache: "no-store",
     }
@@ -12,7 +12,7 @@ const fetchCourseData = async ({ id }: { id: string }) => {
 };
 const fetchRelatedCourseData = async () => {
   const relatedCoursesRes = await fetch(
-    `https://programming-pioneers-p394.vercel.app/api/courses`,
+    `https://programming-pioneers-p394.vercel.app//api/courses`,
     {
       cache: "no-store",
     }

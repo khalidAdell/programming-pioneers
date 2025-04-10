@@ -13,8 +13,6 @@ import {
   CheckCircle,
   AlertCircle,
 } from "lucide-react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 interface FormData {
   name: string;
@@ -83,8 +81,6 @@ const ContactUs = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <Navbar />
-
       {/* Hero Banner */}
       <div className="relative bg-gradient-to-r from-indigo-900 to-purple-800">
         {/* Abstract shapes */}
@@ -430,8 +426,6 @@ const ContactUs = () => {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 };

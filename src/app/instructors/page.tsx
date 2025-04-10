@@ -2,7 +2,7 @@ import Instructors from "../components/instructors/Instructors";
 
 const InstructorsPage = async () => {
   const res = await fetch(
-    "https://programming-pioneers-p394.vercel.app/api/instructors",
+    "https://programming-pioneers-p394.vercel.app//api/instructors",
     {
       cache: "no-store",
     }

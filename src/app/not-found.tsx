@@ -1,13 +1,9 @@
 import Link from "next/link";
 import { Search, Home } from "lucide-react";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <Navbar />
-
       <main className="flex-grow flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl shadow-lg p-8 max-w-2xl w-full text-center border-t-4 border-yellow-500">
           <div className="flex justify-center mb-6">
@@ -44,8 +40,6 @@ export default function NotFound() {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

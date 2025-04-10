@@ -8,7 +8,7 @@ const CoursesPage = async ({ params }: Props) => {
   const { filter } = await params;
 
   const res = await fetch(
-    "https://programming-pioneers-p394.vercel.app/api/courses",
+    "https://programming-pioneers-p394.vercel.app//api/courses",
     {
       cache: "no-store",
     }

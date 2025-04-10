@@ -5,8 +5,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Link from "next/link";
 import { Mail, Send, CheckCircle, AlertCircle, ArrowLeft } from "lucide-react";
-import Navbar from "@/app/components/Navbar";
-import Footer from "@/app/components/Footer";
 
 interface ForgotPasswordFormData {
   email: string;
@@ -58,8 +56,6 @@ const ForgotPassword = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <Navbar />
-
       <main className="container mx-auto px-4 py-12 flex-grow flex items-center justify-center">
         <div className="w-full max-w-md">
           <div className="bg-white rounded-lg shadow-sm p-8">
@@ -167,8 +163,6 @@ const ForgotPassword = () => {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 };

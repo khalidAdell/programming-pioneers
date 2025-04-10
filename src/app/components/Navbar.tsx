@@ -1,18 +1,31 @@
 "use client";
 import { useState } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, LogOut, User } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { signOut } from "next-auth/react";
+import { Session } from "next-auth";
 
-const Navbar = () => {
+interface NavbarProps {
+  session: Session | null;
+}
+
+const Navbar = ({ session }: NavbarProps) => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCoursesDropdownOpen, setIsCoursesDropdownOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+  // Get session from next-auth
+  const isAuthenticated = !!session;
 
   const isCoursesActive = pathname?.startsWith("/courses");
-
   const isActive = (path: string) => decodeURIComponent(pathname) === path;
+
+  const handleSignOut = async () => {
+    await signOut({ redirect: true, callbackUrl: "/" });
+  };
 
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">
@@ -120,20 +133,73 @@ const Navbar = () => {
 
           {/* User actions */}
           <div className="flex items-center order-3">
-            <div className="mr-2 md:mr-4 flex">
-              <Link
-                href="/login"
-                className="text-gray-800 hover:text-yellow-500 font-semibold px-2 md:px-3 py-2 text-sm hidden sm:block"
-              >
-                تسجيل الدخول
-              </Link>
-              <Link
-                href="/register"
-                className="block bg-yellow-500 text-gray-800 font-semibold px-3 md:px-4 py-2 sm:py-2.5 rounded-lg hover:bg-yellow-400 transition-colors mr-1 md:mr-2 text-sm"
-              >
-                إنشاء حساب
-              </Link>
-            </div>
+            {isAuthenticated ? (
+              <div className="relative mr-2 md:mr-4">
+                <button
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  className="flex items-center focus:outline-none"
+                  aria-label="Open user menu"
+                >
+                  <div className="h-8 w-8 rounded-full bg-yellow-100 flex items-center justify-center text-gray-800 font-semibold">
+                    {session?.user?.image ? (
+                      <Image
+                        src={session?.user?.image}
+                        fill
+                        alt={session?.user?.name || "صورة المستخدم"}
+                        className="object-cover max-w-8 h-8 rounded-full"
+                      />
+                    ) : session?.user?.name ? (
+                      session?.user.name.charAt(0).toUpperCase()
+                    ) : (
+                      "U"
+                    )}
+                  </div>
+                  <span className="hidden md:block text-gray-800 ml-2 mr-1">
+                    {session?.user?.name || "المستخدم"}
+                  </span>
+                  <ChevronDown size={16} className="text-gray-600" />
+                </button>
+
+                {/* User dropdown menu */}
+                {isUserMenuOpen && (
+                  <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 text-right">
+                    <Link
+                      href="/profile"
+                      className="px-4 py-2 text-sm text-gray-700 hover:bg-yellow-50 flex items-center"
+                      onClick={() => setIsUserMenuOpen(false)}
+                    >
+                      <User size={16} className="ml-2" />
+                      <span>الملف الشخصي</span>
+                    </Link>
+                    <button
+                      onClick={() => {
+                        handleSignOut();
+                        setIsUserMenuOpen(false);
+                      }}
+                      className="w-full text-right px-4 py-2 text-sm text-gray-700 hover:bg-yellow-50 flex items-center"
+                    >
+                      <LogOut size={16} className="ml-2" />
+                      <span>تسجيل الخروج</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="mr-2 md:mr-4 flex">
+                <Link
+                  href="/login"
+                  className="text-gray-800 hover:text-yellow-500 font-semibold px-2 md:px-3 py-2 text-sm hidden sm:block"
+                >
+                  تسجيل الدخول
+                </Link>
+                <Link
+                  href="/register"
+                  className="block bg-yellow-500 text-gray-800 font-semibold px-3 md:px-4 py-2 sm:py-2.5 rounded-lg hover:bg-yellow-400 transition-colors mr-1 md:mr-2 text-sm"
+                >
+                  إنشاء حساب
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -211,17 +277,44 @@ const Navbar = () => {
             </div>
           </div>
 
-          <Link
-            href={"/login"}
-            className={`block px-3 py-2 rounded-md ${
-              isActive("/login")
-                ? "bg-yellow-100 text-yellow-600"
-                : "text-gray-800 hover:bg-yellow-50"
-            } sm:hidden`}
-            onClick={() => setIsMenuOpen(false)}
-          >
-            تسجيل الدخول
-          </Link>
+          {!isAuthenticated ? (
+            <Link
+              href="/login"
+              className={`block px-3 py-2 rounded-md ${
+                isActive("/login")
+                  ? "bg-yellow-100 text-yellow-600"
+                  : "text-gray-800 hover:bg-yellow-50"
+              } sm:hidden`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              تسجيل الدخول
+            </Link>
+          ) : (
+            <>
+              <Link
+                href="/profile"
+                className={`block px-3 py-2 rounded-md ${
+                  isActive("/profile")
+                    ? "bg-yellow-100 text-yellow-600"
+                    : "text-gray-800 hover:bg-yellow-50"
+                } flex items-center`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <User size={16} className="ml-2" />
+                <span>الملف الشخصي</span>
+              </Link>
+              <button
+                onClick={() => {
+                  handleSignOut();
+                  setIsMenuOpen(false);
+                }}
+                className="w-full text-right flex items-center px-3 py-2 rounded-md text-gray-800 hover:bg-yellow-50"
+              >
+                <LogOut size={16} className="ml-2" />
+                <span>تسجيل الخروج</span>
+              </button>
+            </>
+          )}
         </div>
       </div>
     </nav>

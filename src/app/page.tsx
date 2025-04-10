@@ -1,8 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Search, Star, ChevronLeft } from "lucide-react";
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
+
 import SliderCards from "./components/SliderCards";
 
 interface Category {
@@ -14,7 +13,7 @@ interface Category {
 
 async function getRecentCourses() {
   const res = await fetch(
-    `https://programming-pioneers-p394.vercel.app/api/courses?featured=${true}`,
+    `https://programming-pioneers-p394.vercel.app//api/courses?featured=${true}`,
     {
       cache: "no-store",
     }
@@ -24,7 +23,7 @@ async function getRecentCourses() {
 }
 async function getfeaturedCourses() {
   const res = await fetch(
-    `https://programming-pioneers-p394.vercel.app/api/courses?recent=${true}`,
+    `https://programming-pioneers-p394.vercel.app//api/courses?recent=${true}`,
     {
       cache: "no-store",
     }
@@ -47,8 +46,6 @@ const Home = async () => {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <Navbar />
-
       {/* Hero Section */}
       <div className="relative bg-linear-to-r from-indigo-900 to-purple-800 overflow-hidden">
         {/* Abstract shapes */}
@@ -398,8 +395,6 @@ const Home = async () => {
           </div>
         </section>
       </main>
-
-      <Footer />
     </div>
   );
 };
