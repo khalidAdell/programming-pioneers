@@ -2,8 +2,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Metadata } from "next";
 
-import Navbar from "../Navbar";
-import Footer from "../Footer";
 import { HeroBanner } from "./HeroBanner";
 import { MobileFilters } from "./MobileFilters";
 import { DesktopFilters } from "./DesktopFilter";

@@ -12,8 +12,6 @@ import {
   BookOpen,
   Star,
 } from "lucide-react";
-import Navbar from "../Navbar";
-import Footer from "../Footer";
 
 interface Instructor {
   id: number;
