@@ -80,9 +80,9 @@ const Course = ({
     isFree: boolean
   ) => {
     if (isVideo && isFree) {
-      router.push(`/courses/${course.id}/lessons/${lessonId}`);
+      router.push(`/course/${course.id}/lessons/${lessonId}`);
     } else if (isVideo && !isFree && isAuthenticated) {
-      router.push(`/courses/${course.id}/lessons/${lessonId}`);
+      router.push(`/course/${course.id}/lessons/${lessonId}`);
     } else if (isVideo && !isFree && !isAuthenticated) {
       toast.error("يرجى تسجيل الدخول لمشاهدة هذا الدرس");
       setTimeout(() => {
