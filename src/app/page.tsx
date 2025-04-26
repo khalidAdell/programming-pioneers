@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Search, Star, ChevronLeft } from "lucide-react";
 
-import SliderCards from "./components/SliderCards";
+import SliderCourses from "./components/home/SliderCourses";
+import { Suspense } from "react";
 
 interface Category {
   id: number;
@@ -11,31 +12,7 @@ interface Category {
   icon: string;
 }
 
-async function getRecentCourses() {
-  const res = await fetch(
-    `https://programming-pioneers-p394.vercel.app//api/courses?featured=${true}`,
-    {
-      cache: "no-store",
-    }
-  );
-
-  return res.json();
-}
-async function getfeaturedCourses() {
-  const res = await fetch(
-    `https://programming-pioneers-p394.vercel.app//api/courses?recent=${true}`,
-    {
-      cache: "no-store",
-    }
-  );
-
-  return res.json();
-}
-
 const Home = async () => {
-  const recentCourses = await getRecentCourses();
-  const featuredCourses = await getfeaturedCourses();
-
   const categories: Category[] = [
     { id: 1, name: "تطوير الويب", count: 24, icon: "🌐" },
     { id: 2, name: "الذكاء الاصطناعي", count: 12, icon: "🤖" },
@@ -71,12 +48,18 @@ const Home = async () => {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 w-full">
-                <button className="cursor-pointer flex-grow md:flex-grow-0 bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-xl transition-colors text-lg">
+                <Link
+                  href={"/register"}
+                  className="cursor-pointer flex-grow md:flex-grow-0 bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-xl transition-colors text-lg"
+                >
                   ابدأ التعلم مجاناً
-                </button>
-                <button className="cursor-pointer flex-grow md:flex-grow-0 border-2 border-white text-white hover:bg-white hover:text-purple-900 font-bold py-3 px-8 rounded-xl transition-colors text-lg">
+                </Link>
+                <Link
+                  href={"/courses"}
+                  className="cursor-pointer flex-grow md:flex-grow-0 border-2 border-white text-white hover:bg-white hover:text-purple-900 font-bold py-3 px-8 rounded-xl transition-colors text-lg"
+                >
                   تصفح الدورات
-                </button>
+                </Link>
               </div>
             </div>
 
@@ -132,7 +115,7 @@ const Home = async () => {
         </div>
       </div>
 
-      {/* Stats Section - Redesigned */}
+      {/* Stats Section */}
       <div className="bg-white relative z-10">
         <div className="container mx-auto px-4 -mt-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
@@ -201,45 +184,9 @@ const Home = async () => {
             </div>
           </div>
         </section>
-
-        {/* Featured Courses */}
-        <section className="mb-16">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-2xl font-bold text-gray-800">
-              الدورات المميزة
-            </h2>
-            <Link
-              href="/courses"
-              className="flex items-center text-yellow-600 hover:text-yellow-800 transition-colors"
-            >
-              عرض الكل
-              <ChevronLeft size={16} />
-            </Link>
-          </div>
-
-          <div className="">
-            <SliderCards cards={recentCourses} />
-          </div>
-        </section>
-
-        {/* Latest Courses */}
-        <section className="mb-16">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-2xl font-bold text-gray-800">أحدث الدورات</h2>
-            <Link
-              href="/courses/latest"
-              className="flex items-center text-yellow-600 hover:text-yellow-800 transition-colors"
-            >
-              عرض الكل
-              <ChevronLeft size={16} />
-            </Link>
-          </div>
-
-          <div className="">
-            <SliderCards cards={featuredCourses} />
-          </div>
-        </section>
-
+        <Suspense fallback={<div>loading...</div>}>
+          <SliderCourses />
+        </Suspense>
         {/* Testimonials Section */}
         <section className="mb-16 bg-white rounded-lg shadow p-6">
           <h2 className="text-2xl font-bold text-gray-800 mb-8 text-right">
@@ -339,12 +286,18 @@ const Home = async () => {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="cursor-pointer flex-grow md:flex-grow-0 bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-xl transition-colors text-lg">
-                  <span className="relative z-10">ابدأ الآن مجاناً</span>
-                </button>
-                <button className="cursor-pointer flex-grow md:flex-grow-0 border-2 border-white text-white hover:bg-white hover:text-purple-900 font-bold py-3 px-8 rounded-xl transition-colors text-lg">
-                  <span className="relative z-10">استكشف جميع الدورات</span>
-                </button>
+                <Link
+                  href={"/register"}
+                  className="cursor-pointer flex-grow md:flex-grow-0 bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-xl transition-colors text-lg"
+                >
+                  ابدأ الآن مجاناً
+                </Link>
+                <Link
+                  href={"/courses"}
+                  className="cursor-pointer flex-grow md:flex-grow-0 border-2 border-white text-white hover:bg-white hover:text-purple-900 font-bold py-3 px-8 rounded-xl transition-colors text-lg"
+                >
+                  استكشف جميع الدورات
+                </Link>
               </div>
             </div>
 

@@ -2,7 +2,7 @@ import Instructor from "@/app/components/instructor/Instructor";
 
 const fetchInstructorData = async ({ instructor }: { instructor: string }) => {
   const instructorRes = await fetch(
-    `https://programming-pioneers-p394.vercel.app//api/instructors/${instructor}`,
+    `http://localhost:3000/api/instructors/${instructor}`,
     {
       cache: "no-store",
     }
@@ -12,12 +12,9 @@ const fetchInstructorData = async ({ instructor }: { instructor: string }) => {
 };
 
 const fetchRelatedCourseData = async () => {
-  const relatedCoursesRes = await fetch(
-    `https://programming-pioneers-p394.vercel.app//api/courses`,
-    {
-      cache: "no-store",
-    }
-  );
+  const relatedCoursesRes = await fetch(`http://localhost:3000/api/courses`, {
+    cache: "no-store",
+  });
   return relatedCoursesRes.json();
 };
 

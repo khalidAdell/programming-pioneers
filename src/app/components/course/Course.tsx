@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Clock,
   Users,
@@ -17,20 +18,30 @@ import {
   FileText,
   Award,
   Bookmark,
+  Check,
 } from "lucide-react";
 
 import SliderCards from "../../components/SliderCards";
 import { SingleCourse } from "@/app/types/courses";
+import { Session } from "next-auth";
+import { toast } from "react-hot-toast";
 
 const Course = ({
   course,
   relatedCourses,
+  session,
 }: {
   course: SingleCourse;
   relatedCourses: SingleCourse[];
+  session: Session | null;
 }) => {
+  const router = useRouter();
+  const isAuthenticated = !!session;
   const [activeTab, setActiveTab] = useState<string>("overview");
   const [expandedSections, setExpandedSections] = useState<number[]>([]);
+  const [isCopied, setIsCopied] = useState(false);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const toggleSection = (sectionId: number) => {
     if (expandedSections.includes(sectionId)) {
@@ -63,6 +74,70 @@ const Course = ({
       0
     ) || 0;
 
+  const handleWatchFreeLesson = (
+    lessonId: number,
+    isVideo: boolean,
+    isFree: boolean
+  ) => {
+    if (isVideo && isFree) {
+      router.push(`/courses/${course.id}/lessons/${lessonId}`);
+    } else if (isVideo && !isFree && isAuthenticated) {
+      router.push(`/courses/${course.id}/lessons/${lessonId}`);
+    } else if (isVideo && !isFree && !isAuthenticated) {
+      toast.error("يرجى تسجيل الدخول لمشاهدة هذا الدرس");
+      setTimeout(() => {
+        router.push("/login");
+      }, 2000);
+    }
+  };
+
+  const addToCart = async () => {
+    if (!isAuthenticated) {
+      router.push("/login");
+      return;
+    }
+
+    setIsAddingToCart(true);
+    try {
+      // Simulate API call to add course to cart
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      toast.success("تمت إضافة الدورة إلى السلة بنجاح");
+    } catch {
+      toast.error("حدث خطأ أثناء إضافة الدورة للسلة");
+    } finally {
+      setIsAddingToCart(false);
+    }
+  };
+
+  const saveForLater = async () => {
+    if (!isAuthenticated) {
+      router.push("/login");
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      // Simulate API call to save course for later
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      toast.success("تم حفظ الدورة للدراسة لاحقاً");
+    } catch {
+      toast.error("حدث خطأ أثناء حفظ الدورة");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const shareCourse = () => {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url);
+    setIsCopied(true);
+    toast.success("تم نسخ رابط الدورة");
+
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 3000);
+  };
+
   if (course.error) {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col">
@@ -90,7 +165,7 @@ const Course = ({
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
       {/* Course Hero Section */}
-      <div className="relative bg-linear-to-r from-indigo-900 to-purple-800 py-16">
+      <div className="relative bg-gradient-to-r from-indigo-900 to-purple-800 py-16">
         {/* Abstract shapes */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10">
           <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-400 rounded-full translate-x-1/2 -translate-y-1/2"></div>
@@ -280,41 +355,6 @@ const Course = ({
                       ))}
                     </ul>
                   </div>
-
-                  {/* <div className="mb-8">
-                    <h3 className="text-xl font-bold text-gray-800 mb-4">
-                      لمن هذه الدورة؟
-                    </h3>
-                    <ul className="space-y-2">
-                      <li className="flex items-start gap-2">
-                        <span className="text-yellow-500 flex-shrink-0 mt-1">
-                          •
-                        </span>
-                        <p className="text-gray-700">
-                          مطوري الواجهات الأمامية الذين يرغبون في تعلم React و
-                          NextJS
-                        </p>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-yellow-500 flex-shrink-0 mt-1">
-                          •
-                        </span>
-                        <p className="text-gray-700">
-                          مطوري الويب الذين يريدون تحسين مهاراتهم في بناء
-                          تطبيقات ويب حديثة
-                        </p>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-yellow-500 flex-shrink-0 mt-1">
-                          •
-                        </span>
-                        <p className="text-gray-700">
-                          المبتدئين الذين لديهم معرفة أساسية بـ HTML و CSS و
-                          JavaScript
-                        </p>
-                      </li>
-                    </ul>
-                  </div> */}
                 </div>
               )}
 
@@ -379,10 +419,18 @@ const Course = ({
                               >
                                 <div className="flex items-center gap-3">
                                   {lesson.isVideo ? (
-                                    <PlayCircle
-                                      size={18}
-                                      className="text-gray-600"
-                                    />
+                                    <button
+                                      onClick={() =>
+                                        handleWatchFreeLesson(
+                                          lesson.id,
+                                          lesson.isVideo,
+                                          lesson.isFree
+                                        )
+                                      }
+                                      className="text-gray-600 hover:text-yellow-500 transition-colors"
+                                    >
+                                      <PlayCircle size={18} />
+                                    </button>
                                   ) : (
                                     <FileText
                                       size={18}
@@ -398,9 +446,35 @@ const Course = ({
                                     )}
                                   </span>
                                 </div>
-                                <span className="text-gray-600 text-sm">
-                                  {lesson.duration}
-                                </span>
+                                <div className="flex items-center gap-4">
+                                  {lesson.isVideo && (
+                                    <button
+                                      onClick={() =>
+                                        handleWatchFreeLesson(
+                                          lesson.id,
+                                          lesson.isVideo,
+                                          lesson.isFree
+                                        )
+                                      }
+                                      className={`px-3 py-1 rounded-md text-sm font-medium ${
+                                        lesson.isFree
+                                          ? "bg-green-500 text-white hover:bg-green-600"
+                                          : isAuthenticated
+                                          ? "bg-yellow-500 text-white hover:bg-yellow-600"
+                                          : "bg-gray-200 text-gray-500 cursor-not-allowed"
+                                      } transition-colors`}
+                                    >
+                                      {lesson.isFree
+                                        ? "مشاهدة مجاناً"
+                                        : isAuthenticated
+                                        ? "مشاهدة"
+                                        : "للمشتركين فقط"}
+                                    </button>
+                                  )}
+                                  <span className="text-gray-600 text-sm">
+                                    {lesson.duration}
+                                  </span>
+                                </div>
                               </div>
                             ))}
                           </div>
@@ -540,7 +614,7 @@ const Course = ({
           </div>
 
           {/* Right Column - Course Purchase */}
-          <div className="w-full lg:w-1/3 bg-white rounded-lg shadow-sm p-6">
+          <div className="w-full lg:w-1/3 bg-white rounded-lg shadow-sm p-6 sticky top-4 self-start">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">
               شراء الدورة
             </h2>
@@ -552,17 +626,93 @@ const Course = ({
               </span>
             </div>
 
-            <button className="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-3 rounded-lg w-full transition-colors mb-4 flex items-center justify-center gap-2">
-              <ShoppingCart size={18} /> إضافة إلى السلة
+            {!isAuthenticated ? (
+              <>
+                <Link
+                  href={"/login"}
+                  className="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-3 rounded-lg w-full transition-colors mb-4 flex items-center justify-center gap-2"
+                >
+                  <ShoppingCart size={18} /> إضافة إلى السلة
+                </Link>
+
+                <Link
+                  href={"/login"}
+                  className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-3 rounded-lg w-full transition-colors mb-4 flex items-center justify-center gap-2"
+                >
+                  <Bookmark size={18} /> حفظ للدراسة لاحقاً
+                </Link>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={addToCart}
+                  disabled={isAddingToCart}
+                  className="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-3 rounded-lg w-full transition-colors mb-4 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  {isAddingToCart ? (
+                    <>جاري الإضافة...</>
+                  ) : (
+                    <>
+                      <ShoppingCart size={18} /> إضافة إلى السلة
+                    </>
+                  )}
+                </button>
+
+                <button
+                  onClick={saveForLater}
+                  disabled={isSaving}
+                  className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-3 rounded-lg w-full transition-colors mb-4 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  {isSaving ? (
+                    <>جاري الحفظ...</>
+                  ) : (
+                    <>
+                      <Bookmark size={18} /> حفظ للدراسة لاحقاً
+                    </>
+                  )}
+                </button>
+              </>
+            )}
+
+            <button
+              onClick={shareCourse}
+              className="bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 font-bold py-3 rounded-lg w-full transition-colors flex items-center justify-center gap-2"
+            >
+              {isCopied ? (
+                <>
+                  <Check size={18} className="text-green-500" /> تم نسخ الرابط
+                </>
+              ) : (
+                <>
+                  <Share2 size={18} /> مشاركة الدورة
+                </>
+              )}
             </button>
 
-            <button className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-3 rounded-lg w-full transition-colors mb-4 flex items-center justify-center gap-2">
-              <Bookmark size={18} /> حفظ للدراسة لاحقاً
-            </button>
-
-            <button className="bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 font-bold py-3 rounded-lg w-full transition-colors flex items-center justify-center gap-2">
-              <Share2 size={18} /> مشاركة الدورة
-            </button>
+            {/* Additional course info */}
+            <div className="mt-6 bg-gray-50 p-4 rounded-lg">
+              <h3 className="font-bold text-gray-800 mb-3">
+                تتضمن هذه الدورة:
+              </h3>
+              <ul className="space-y-2">
+                <li className="flex items-center gap-2 text-gray-700">
+                  <FileText size={16} className="text-gray-500" />
+                  <span>{totalLessons} درس</span>
+                </li>
+                <li className="flex items-center gap-2 text-gray-700">
+                  <Clock size={16} className="text-gray-500" />
+                  <span>{calculateTotalDuration()} من الفيديو</span>
+                </li>
+                <li className="flex items-center gap-2 text-gray-700">
+                  <Award size={16} className="text-gray-500" />
+                  <span>شهادة إتمام</span>
+                </li>
+                <li className="flex items-center gap-2 text-gray-700">
+                  <Users size={16} className="text-gray-500" />
+                  <span>وصول كامل للمحتوى</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </main>
