@@ -3,16 +3,22 @@ import { authOptions } from "@/app/lib/next-auth";
 import { getServerSession } from "next-auth";
 
 const fetchCourseData = async ({ id }: { id: string }) => {
-  const courseRes = await fetch(`http://localhost:3000/api/course/${id}`, {
-    cache: "no-store",
-  });
+  const courseRes = await fetch(
+    `https://programming-pioneers.vercel.app/api/course/${id}`,
+    {
+      cache: "no-store",
+    }
+  );
 
   return courseRes.json();
 };
 const fetchRelatedCourseData = async () => {
-  const relatedCoursesRes = await fetch(`http://localhost:3000/api/courses`, {
-    cache: "no-store",
-  });
+  const relatedCoursesRes = await fetch(
+    `https://programming-pioneers.vercel.app/api/courses`,
+    {
+      cache: "no-store",
+    }
+  );
   return relatedCoursesRes.json();
 };
 

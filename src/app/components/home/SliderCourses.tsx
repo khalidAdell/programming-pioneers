@@ -3,17 +3,20 @@ import { ChevronLeft } from "lucide-react";
 import SliderCards from "../SliderCards";
 
 async function getRecentCourses() {
-  const res = await fetch(`http://localhost:3000/api/courses?recent=${true}`, {
-    next: {
-      revalidate: 60,
-    },
-  });
+  const res = await fetch(
+    `https://programming-pioneers.vercel.app/api/courses?recent=${true}`,
+    {
+      next: {
+        revalidate: 60,
+      },
+    }
+  );
 
   return res.json();
 }
 async function getfeaturedCourses() {
   const res = await fetch(
-    `http://localhost:3000/api/courses?featured=${true}`,
+    `https://programming-pioneers.vercel.app/api/courses?featured=${true}`,
     {
       next: {
         revalidate: 60,
