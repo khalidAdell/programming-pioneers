@@ -19,7 +19,7 @@ const CheckoutPage = () => {
     id: 1,
     title: "الدورة التدريبية المتكاملة",
     price: "199.99 دولار",
-    imageUrl: "/course-image.jpg",
+    imageUrl: "/images/cart-1.jpg",
     instructor: "أحمد محمد",
     description: "",
     duration: "",
@@ -124,23 +124,6 @@ const CheckoutPage = () => {
   const coursePrice = course?.price || "199.99 دولار";
   const courseName = course?.title || "الدورة التدريبية المتكاملة";
 
-  const getWalletLogo = () => {
-    switch (walletType) {
-      case "vodafoneCash":
-        return "/vodafone-cash.png"; // Replace with actual path
-      case "orangeCash":
-        return "/orange-cash.png"; // Replace with actual path
-      case "etisalatCash":
-        return "/etisalat-cash.png"; // Replace with actual path
-      case "weePay":
-        return "/wee-pay.png"; // Replace with actual path
-      case "fawry":
-        return "/fawry.png"; // Replace with actual path
-      default:
-        return "/wallet-icon.png"; // Replace with actual path
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="container mx-auto px-4">
@@ -233,13 +216,6 @@ const CheckoutPage = () => {
                       : "border-gray-200 hover:border-gray-300"
                   }`}
                 >
-                  <Image
-                    src={getWalletLogo()}
-                    alt="E-Wallet"
-                    width={24}
-                    height={24}
-                    className="object-contain"
-                  />
                   <div className="text-right">
                     <p
                       className={`font-bold ${
@@ -284,7 +260,7 @@ const CheckoutPage = () => {
                           />
                           <div className="absolute left-3 top-1/2 -translate-y-1/2">
                             <Image
-                              src="/visa-icon.png"
+                              src="/images/visa-icon.png"
                               alt="Visa"
                               width={32}
                               height={20}
@@ -412,12 +388,6 @@ const CheckoutPage = () => {
                             }`}
                           >
                             <div className="flex flex-col items-center gap-1 text-gray-700">
-                              <Image
-                                src="/vodafone-cash.png"
-                                alt="Vodafone Cash"
-                                width={40}
-                                height={40}
-                              />
                               <span className="text-sm font-medium">
                                 فودافون كاش
                               </span>
@@ -434,12 +404,6 @@ const CheckoutPage = () => {
                             }`}
                           >
                             <div className="flex flex-col items-center gap-1 text-gray-700">
-                              <Image
-                                src="/orange-cash.png"
-                                alt="Orange Cash"
-                                width={40}
-                                height={40}
-                              />
                               <span className="text-sm font-medium">
                                 أورانج كاش
                               </span>
@@ -456,12 +420,6 @@ const CheckoutPage = () => {
                             }`}
                           >
                             <div className="flex flex-col items-center gap-1 text-gray-700">
-                              <Image
-                                src="/etisalat-cash.png"
-                                alt="Etisalat Cash"
-                                width={40}
-                                height={40}
-                              />
                               <span className="text-sm font-medium">
                                 اتصالات كاش
                               </span>
@@ -478,12 +436,6 @@ const CheckoutPage = () => {
                             }`}
                           >
                             <div className="flex flex-col items-center gap-1 text-gray-700">
-                              <Image
-                                src="/wee-pay.png"
-                                alt="WE Pay"
-                                width={40}
-                                height={40}
-                              />
                               <span className="text-sm font-medium">
                                 WE Pay
                               </span>
@@ -500,12 +452,6 @@ const CheckoutPage = () => {
                             }`}
                           >
                             <div className="flex flex-col items-center gap-1 text-gray-700">
-                              <Image
-                                src="/fawry.png"
-                                alt="Fawry"
-                                width={40}
-                                height={40}
-                              />
                               <span className="text-sm font-medium">فوري</span>
                             </div>
                           </button>

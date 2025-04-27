@@ -29,7 +29,7 @@ const CartPage = () => {
       id: 1,
       title: "دورة البرمجة التفاعلية الشاملة",
       instructor: "د. أحمد محمود",
-      image: "/courses/course1.jpg",
+      image: "/images/cart-1.jpg",
       price: 199.99,
       originalPrice: 249.99,
     },
@@ -37,7 +37,7 @@ const CartPage = () => {
       id: 2,
       title: "أساسيات تطوير تطبيقات الويب",
       instructor: "م. سارة الشافعي",
-      image: "/courses/course2.jpg",
+      image: "/images/JS.png",
       price: 149.99,
       originalPrice: 149.99,
     },
@@ -210,7 +210,7 @@ const CartPage = () => {
                           setPromoStatus("idle");
                         }}
                         placeholder="أدخل كود الخصم"
-                        className={`w-full border rounded-lg py-2 px-4 text-right ${
+                        className={`w-full border text-gray-700 rounded-lg py-2 px-4 text-right ${
                           promoStatus === "error"
                             ? "border-red-500 pr-10"
                             : "border-gray-300"
