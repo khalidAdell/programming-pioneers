@@ -13,7 +13,7 @@ import {
   X,
 } from "lucide-react";
 
-const CheckoutPage = () => {
+const CartPage = () => {
   const router = useRouter();
   const [promoCode, setPromoCode] = useState<string>("");
   const [promoStatus, setPromoStatus] = useState<
@@ -338,4 +338,4 @@ const CheckoutPage = () => {
   );
 };
 
-export default CheckoutPage;
+export default CartPage;

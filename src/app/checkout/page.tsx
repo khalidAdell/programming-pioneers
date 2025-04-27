@@ -14,7 +14,11 @@ import {
 } from "lucide-react";
 import { Course } from "../types/courses";
 
-const PaymentPage = ({ course }: { course: Course }) => {
+interface CheckoutPageProps {
+  course: Course;
+}
+
+const CheckoutPage = ({ course }: CheckoutPageProps) => {
   const router = useRouter();
   const [paymentMethod, setPaymentMethod] = useState<string>("creditCard");
   const [cardNumber, setCardNumber] = useState<string>("");
@@ -669,4 +673,4 @@ const PaymentPage = ({ course }: { course: Course }) => {
   );
 };
 
-export default PaymentPage;
+export default CheckoutPage;
