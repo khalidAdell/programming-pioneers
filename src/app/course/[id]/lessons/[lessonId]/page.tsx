@@ -3,9 +3,9 @@ import LessonPage from "@/app/components/lessons/LessonPage";
 const LessonPageContainer = async ({
   params,
 }: {
-  params: { lessonId: string };
+  params: Promise<{ lessonId: string }>;
 }) => {
-  const { lessonId } = params;
+  const { lessonId } = await params;
   return <LessonPage lessonId={lessonId} />;
 };
 
