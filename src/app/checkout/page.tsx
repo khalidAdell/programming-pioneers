@@ -18,7 +18,8 @@ interface CheckoutPageProps {
   course: Course;
 }
 
-const CheckoutPage = ({ course }: CheckoutPageProps) => {
+const CheckoutPage = ({ params }: { params: CheckoutPageProps }) => {
+  const { course } = params;
   const router = useRouter();
   const [paymentMethod, setPaymentMethod] = useState<string>("creditCard");
   const [cardNumber, setCardNumber] = useState<string>("");
