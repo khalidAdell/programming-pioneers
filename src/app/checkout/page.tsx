@@ -14,12 +14,21 @@ import {
 } from "lucide-react";
 import { Course } from "../types/courses";
 
-interface CheckoutPageProps {
-  course: Course;
-}
-
-const CheckoutPage = ({ params }: { params: CheckoutPageProps }) => {
-  const { course } = params;
+const CheckoutPage = () => {
+  const course: Course = {
+    id: 1,
+    title: "الدورة التدريبية المتكاملة",
+    price: "199.99 دولار",
+    imageUrl: "/course-image.jpg",
+    instructor: "أحمد محمد",
+    description: "",
+    duration: "",
+    level: "",
+    students: 0,
+    rating: 0,
+    category: "",
+    tags: [],
+  };
   const router = useRouter();
   const [paymentMethod, setPaymentMethod] = useState<string>("creditCard");
   const [cardNumber, setCardNumber] = useState<string>("");
