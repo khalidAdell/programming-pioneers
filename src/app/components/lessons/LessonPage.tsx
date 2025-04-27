@@ -70,21 +70,18 @@ const lessonData = {
           title: "مقدمة في تطوير الويب",
           duration: "30:15",
           isCompleted: true,
-          isCurrent: false,
         },
         {
           id: 102,
           title: "مقدمة في أساسيات البرمجة بلغة JavaScript",
           duration: "45:20",
           isCompleted: false,
-          isCurrent: true,
         },
         {
           id: 103,
           title: "المتغيرات وأنواع البيانات في JavaScript",
           duration: "38:45",
           isCompleted: false,
-          isCurrent: false,
         },
       ],
     },
@@ -97,21 +94,18 @@ const lessonData = {
           title: "العمليات الحسابية والمنطقية",
           duration: "42:10",
           isCompleted: false,
-          isCurrent: false,
         },
         {
           id: 105,
           title: "هياكل التحكم: الشروط والحلقات",
           duration: "50:30",
           isCompleted: false,
-          isCurrent: false,
         },
         {
           id: 106,
           title: "الدوال في JavaScript",
           duration: "55:20",
           isCompleted: false,
-          isCurrent: false,
         },
       ],
     },
@@ -170,7 +164,7 @@ const VideoPlayer = ({
     </div>
   );
 };
-const LessonPage = ({}) => {
+const LessonPage = ({ lessonId }: { lessonId: string }) => {
   const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [markAsCompleted, setMarkAsCompleted] = useState(false);
@@ -286,7 +280,7 @@ const LessonPage = ({}) => {
                     >
                       <div
                         className={`p-4 flex items-center justify-between hover:bg-gray-50 transition-colors ${
-                          lesson.isCurrent ? "bg-yellow-50" : ""
+                          `${lesson.id}` === lessonId ? "bg-yellow-50" : ""
                         } ${
                           lesson.isCompleted ? "text-gray-500" : "text-gray-800"
                         }`}
@@ -298,7 +292,7 @@ const LessonPage = ({}) => {
                           <span className="mx-2">{lesson.title}</span>
                           {lesson.isCompleted ? (
                             <CheckCircle size={18} className="text-green-500" />
-                          ) : lesson.isCurrent ? (
+                          ) : `${lesson.id}` === lessonId ? (
                             <PlayCircle size={18} className="text-yellow-500" />
                           ) : (
                             <div className="w-4 h-4 rounded-full border border-gray-300"></div>
@@ -449,7 +443,7 @@ const LessonPage = ({}) => {
                     </label>
                     <textarea
                       id="comment"
-                      className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                      className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-yellow-500 text-gray-700"
                       rows={3}
                       placeholder="اكتب تعليقك هنا..."
                       value={newComment}

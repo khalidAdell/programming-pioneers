@@ -24,7 +24,7 @@ import {
 import SliderCards from "../../components/SliderCards";
 import { SingleCourse } from "@/app/types/courses";
 import { Session } from "next-auth";
-import { toast } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 
 const Course = ({
   course,
@@ -164,6 +164,7 @@ const Course = ({
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
+      <Toaster position="top-center" reverseOrder={false} />
       {/* Course Hero Section */}
       <div className="relative bg-gradient-to-r from-indigo-900 to-purple-800 py-16">
         {/* Abstract shapes */}

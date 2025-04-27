@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Menu, X, ChevronDown, LogOut, User } from "lucide-react";
+import { Menu, X, ChevronDown, LogOut, User, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -133,6 +133,16 @@ const Navbar = ({ session }: NavbarProps) => {
 
           {/* User actions */}
           <div className="flex items-center order-3">
+            <Link
+              href="/cart"
+              className={`hidden md:flex px-3 py-2 rounded-md ${
+                isActive("/cart")
+                  ? "bg-yellow-100 text-yellow-600"
+                  : "text-gray-800 hover:bg-yellow-50"
+              } items-center gap-2`}
+            >
+              <ShoppingCart />
+            </Link>
             {isAuthenticated ? (
               <div className="relative mr-2 md:mr-4">
                 <button
@@ -291,6 +301,16 @@ const Navbar = ({ session }: NavbarProps) => {
             </Link>
           ) : (
             <>
+              <Link
+                href="/cart"
+                className={`block px-3 py-2 rounded-md ${
+                  isActive("/cart")
+                    ? "bg-yellow-100 text-yellow-600"
+                    : "text-gray-800 hover:bg-yellow-50"
+                } flex items-center gap-2`}
+              >
+                <ShoppingCart /> Cart
+              </Link>
               <Link
                 href="/profile"
                 className={`block px-3 py-2 rounded-md ${
