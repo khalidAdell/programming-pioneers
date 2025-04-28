@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./lib/next-auth";
+import { Analytics } from "@vercel/analytics/react";
 
 const almarai = Almarai({
   variable: "--font-almarai",
@@ -29,6 +30,7 @@ export default async function RootLayout({
       <body className={`${almarai.variable} antialiased bg-white text-black`}>
         <Provider>
           <Navbar session={session} />
+          <Analytics />
           {children}
           <Footer />
         </Provider>

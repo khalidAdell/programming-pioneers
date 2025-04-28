@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
+    "@vercel/analytics": "^1.5.0",
     "lucide-react": "^0.487.0",
     "next": "15.2.4",
     "next-auth": "^4.24.11",
